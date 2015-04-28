@@ -1,6 +1,6 @@
 package algorithms;
 
-import java.awt.Point;
+import com.vividsolutions.jts.geom.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -47,12 +47,12 @@ public class SlowConvexHull implements ConvexHullAlgorithm
 	
 	private boolean rightOfLine(Point p, LineSegment line)
 	{
-		return (line.p2.x-line.p1.x)*(p.y-line.p1.y) - (line.p2.y-line.p1.y)*(p.x-line.p1.x) < 0;
+		return (line.p2.getCoordinate().x-line.p1.getCoordinate().x)*(p.getCoordinate().y-line.p1.getCoordinate().y) - (line.p2.getCoordinate().y-line.p1.getCoordinate().y)*(p.getCoordinate().x-line.p1.getCoordinate().x) < 0;
 	}
 	
 	private boolean leftOfLine(Point p, LineSegment line)
 	{
-		return (line.p2.x-line.p1.x)*(p.y-line.p1.y) - (line.p2.y-line.p1.y)*(p.x-line.p1.x) > 0;
+		return (line.p2.getCoordinate().x-line.p1.getCoordinate().x)*(p.getCoordinate().y-line.p1.getCoordinate().y) - (line.p2.getCoordinate().y-line.p1.getCoordinate().y)*(p.getCoordinate().x-line.p1.getCoordinate().x) > 0;
 	}
 	
 	private ArrayList<Point> sortedVertexList(ArrayList<LineSegment> lines)
@@ -110,7 +110,7 @@ public class SlowConvexHull implements ConvexHullAlgorithm
 		@Override
 		public int compare(LineSegment o1, LineSegment o2) 
 		{
-			return (new Integer(o1.p1.x)).compareTo(new Integer(o2.p1.x));
+			return (new Integer((int) o1.p1.getCoordinate().x)).compareTo(new Integer((int) o2.p1.getCoordinate().x));
 		}
 	}
 

@@ -1,5 +1,5 @@
 package algorithms;
-import java.awt.Point;
+import com.vividsolutions.jts.geom.Point;
 import java.util.ArrayList;
 
 

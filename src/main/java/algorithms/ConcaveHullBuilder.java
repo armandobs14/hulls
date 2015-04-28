@@ -34,7 +34,7 @@ public class ConcaveHullBuilder {
          * Make an irregular polygon and generate random points within it
          * to test the concave hull algorithm
          */
-        final int numPoints = 200;
+        final int numPoints = 1600;
 
         Coordinate[] vertices = {
             new Coordinate(0, 0),
@@ -106,6 +106,7 @@ public class ConcaveHullBuilder {
      * @return a List of LineString boundary segments for the concave hull
      */
     public static List<LineString> getConcaveHull(Point[] points, double alpha) {
+            
         double alpha2 = 2 * alpha;
         STRtree index = new STRtree();
         for (Point p : points) index.insert(p.getEnvelopeInternal(), p);
