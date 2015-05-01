@@ -21,21 +21,23 @@ import wwwc.nees.joint.module.kao.AbstractKAO;
 public class Kao extends AbstractKAO {
 
     private Set<URI> contexts;
+    public static int limit = 1;
 
     public <T extends Object> Kao(Class<T> classe) {
         super(classe);
         contexts = new HashSet<>();
     }
 
-    public Iterator getNeighborhoods(int offset, int limit) {
-        String query = "prefix loc: <http://nees.com.br/linkn/onto/locality/>\n"
-                + "select ?neigh\n"
+    public Iterator getNeighborhoods(int page) {
+        
+        String query = "select distinct ?neighborhood\n"
                 + "from <http://nees.com.br/linkn/data/brazil/address2/>\n"
                 + "where{\n"
-                + "?neigh a loc:Neighborhood; loc:hasLocation ?sector.\n"
+                + "?neighborhood a loc:Neighborhood; loc:hasLocation ?sector.\n"
                 + "?sector a loc:Sector.\n"
                 + "}"
-                + "offset " + offset + "\n"
+                + "order by ?neighborhood\n"
+                + "offset " + (page*limit) + "\n"
                 + "limit " + limit + "\n";
         //return this.executeSPARQLqueryResultList(query);
         System.out.println(query);
@@ -61,9 +63,17 @@ public class Kao extends AbstractKAO {
                 + "select distinct ?sector\n"
                 + "from <http://nees.com.br/linkn/data/brazil/address2/>\n"
                 + "where{\n"
-                + ni.getURI()+" loc:hasLocation ?sector.\n"
+                + ni.getURI() + " loc:hasLocation ?sector.\n"
                 + "?sector a loc:Sector.\n"
                 + "}";
-        return this.executeSPARQLqueryResultList(query,new URI("http://nees.com.br/linkn/data/brazil/address2/"));
+        return this.executeSPARQLqueryResultList(query, new URI("http://nees.com.br/linkn/data/brazil/address2/"));
+    }
+
+    public Integer getNeighborhoodGroups() {
+        String query = "select (ceil(count(?n)/"+limit+") as ?q)\n"
+                + "where{\n"
+                + "?n a loc:Neighborhood.\n"
+                + "}";
+        return (Integer) this.executeSPARQLquerySingleResult(query);
     }
 }

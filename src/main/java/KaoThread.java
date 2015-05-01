@@ -26,24 +26,21 @@ import joint.codegen.locality.SectorImpl;
  */
 public class KaoThread extends ThreadNotifier {
 
-    private final FastConvexHull convexHull = new FastConvexHull();
     private NeighborhoodImpl ni;
-    private static final Kao kao = new Kao(NeighborhoodImpl.class);
-    private static int queryOffset = 0;
-    public static final int LIMIT = 1;
 
     public KaoThread(int id) {
         super(id);
     }
 
+    public void setNeighborhood(NeighborhoodImpl n) {
+        this.ni = n;
+    }
+
     @Override
     public void doRun() throws Exception {
         System.out.println(this.threadId);
-
-        ni = kao.getNeighborhood(queryOffset);
         String polygon = this.convexHull(ni.getLocalityHasLocation());
         System.out.println(polygon);
-        KaoThread.queryOffset += LIMIT;
         this.notifyFinish();
     }
 
@@ -76,7 +73,7 @@ public class KaoThread extends ThreadNotifier {
             builder.append(",");
             builder.append(edge.getCoordinateN(1).x);
             builder.append("]");
-            
+
             builder.append(",");
         }
         System.out.println(builder.toString());
@@ -94,7 +91,7 @@ public class KaoThread extends ThreadNotifier {
 //        
 //        
 //        System.out.println(returnBuilder.toString());
-        
+
         System.out.println("----------------------------");
 
         //CHB.demo();
