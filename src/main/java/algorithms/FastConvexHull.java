@@ -9,18 +9,20 @@ public class FastConvexHull implements ConvexHullAlgorithm {
 
     @Override
     public ArrayList<Point> execute(ArrayList<Point> points) {
-        Collections.sort(points, new XCompare());
-
-        int n = points.size();
+//        ArrayList<Point> xSorted = (ArrayList<Point>) points.clone();
+        ArrayList<Point> xSorted = (ArrayList<Point>) points;
+        Collections.sort(xSorted, new XCompare());
+        int n = xSorted.size();
 
         Point[] lUpper = new Point[n];
 
-        lUpper[0] = points.get(0);
-        lUpper[1] = points.get(1);
+        lUpper[0] = xSorted.get(0);
+        lUpper[1] = xSorted.get(1);
 
         int lUpperSize = 2;
+
         for (int i = 2; i < n; i++) {
-            lUpper[lUpperSize] = points.get(i);
+            lUpper[lUpperSize] = xSorted.get(i);
             lUpperSize++;
 
             while (lUpperSize > 2 && !rightTurn(lUpper[lUpperSize - 3], lUpper[lUpperSize - 2], lUpper[lUpperSize - 1])) {
@@ -32,13 +34,13 @@ public class FastConvexHull implements ConvexHullAlgorithm {
 
         Point[] lLower = new Point[n];
 
-        lLower[0] = points.get(n - 1);
-        lLower[1] = points.get(n - 2);
+        lLower[0] = xSorted.get(n - 1);
+        lLower[1] = xSorted.get(n - 2);
 
         int lLowerSize = 2;
 
         for (int i = n - 3; i >= 0; i--) {
-            lLower[lLowerSize] = points.get(i);
+            lLower[lLowerSize] = xSorted.get(i);
             lLowerSize++;
 
             while (lLowerSize > 2 && !rightTurn(lLower[lLowerSize - 3], lLower[lLowerSize - 2], lLower[lLowerSize - 1])) {
@@ -48,7 +50,7 @@ public class FastConvexHull implements ConvexHullAlgorithm {
             }
         }
 
-        ArrayList<Point> result = new ArrayList<>();
+        ArrayList<Point> result = new ArrayList<Point>();
 
         for (int i = 0; i < lUpperSize; i++) {
             result.add(lUpper[i]);
@@ -62,15 +64,14 @@ public class FastConvexHull implements ConvexHullAlgorithm {
     }
 
     private boolean rightTurn(Point a, Point b, Point c) {
-
-        return (b.getCoordinate().x - a.getCoordinate().x) * (c.getCoordinate().y - a.getCoordinate().y) - (b.getCoordinate().y - a.getCoordinate().y) * (c.getCoordinate().x - a.getCoordinate().x) > 0;
+        return (b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX()) > 0;
     }
 
     private class XCompare implements Comparator<Point> {
 
         @Override
         public int compare(Point o1, Point o2) {
-            return (new Integer((int) o1.getCoordinate().x)).compareTo(new Integer((int) o2.getCoordinate().x));
+            return (new Integer((int) o1.getX())).compareTo(new Integer((int) o2.getX()));
         }
     }
 }
