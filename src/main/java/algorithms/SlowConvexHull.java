@@ -1,5 +1,7 @@
 package algorithms;
 
+import com.vividsolutions.jts.geom.CoordinateList;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +10,7 @@ import java.util.Comparator;
 
 public class SlowConvexHull implements ConvexHullAlgorithm 
 {
-
+        private GeometryFactory gf = new GeometryFactory();
 	@Override
 	public ArrayList<Point> execute(ArrayList<Point> points) 
 	{

@@ -1,23 +1,26 @@
 package algorithms;
 
+import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class FastConvexHull implements ConvexHullAlgorithm {
+    private GeometryFactory gf = new GeometryFactory();
 
     @Override
     public ArrayList<Point> execute(ArrayList<Point> points) {
-//        ArrayList<Point> xSorted = (ArrayList<Point>) points.clone();
-        ArrayList<Point> xSorted = (ArrayList<Point>) points;
+        
+        ArrayList<Point> xSorted = (ArrayList<Point>) points.clone();
         Collections.sort(xSorted, new XCompare());
         int n = xSorted.size();
 
         Point[] lUpper = new Point[n];
 
-        lUpper[0] = xSorted.get(0);
+        lUpper[0] =lUpper[1] = xSorted.get(0);
         lUpper[1] = xSorted.get(1);
+//        lUpper[1] = xSorted.get(1);
 
         int lUpperSize = 2;
 
@@ -71,7 +74,7 @@ public class FastConvexHull implements ConvexHullAlgorithm {
 
         @Override
         public int compare(Point o1, Point o2) {
-            return (new Integer((int) o1.getX())).compareTo(new Integer((int) o2.getX()));
+            return (new Double((double) o1.getX())).compareTo(new Double((double) o2.getX()));
         }
     }
 }

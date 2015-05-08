@@ -5,5 +5,5 @@ import java.util.ArrayList;
 
 public interface ConvexHullAlgorithm 
 {
-	ArrayList<Point> execute(ArrayList<Point> points);
+	ArrayList<Point> execute(ArrayList<Point> list);
 }
