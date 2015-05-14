@@ -27,7 +27,7 @@ public class QuickHull implements ConvexHullAlgorithm {
             return (ArrayList) points.clone();
         }
 
-        int minPoint = -1, maxPoint = -1;
+        int minPoint = 0 , maxPoint = 0;
 
         double minX = points.get(0).getX();
 
@@ -57,7 +57,7 @@ public class QuickHull implements ConvexHullAlgorithm {
 
         convexHull.add(A);
 
-        convexHull.add(B);
+        convexHull.add(B);       
 
         points.remove(A);
         points.remove(B);

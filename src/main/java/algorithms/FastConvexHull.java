@@ -18,7 +18,7 @@ public class FastConvexHull implements ConvexHullAlgorithm {
 
         Point[] lUpper = new Point[n];
 
-        lUpper[0] =lUpper[1] = xSorted.get(0);
+        lUpper[0] = lUpper[1] = xSorted.get(0);
         lUpper[1] = xSorted.get(1);
 //        lUpper[1] = xSorted.get(1);
 
